@@ -1,0 +1,17 @@
+{
+  "wuc_product_offers_pricing_header": "Tarification",
+  "wuc_product_offers_confirmation_header": "Confirmation",
+
+  "wuc_product_offers_pricing_duration": "{{ duration }} :",
+  "wuc_product_offers_pricing_day": "{{ number }} jour",
+  "wuc_product_offers_pricing_days": "{{ number }} jours",
+  "wuc_product_offers_pricing_month": "{{ number }} mois",
+  "wuc_product_offers_pricing_months": "{{ number }} mois",
+
+  "wuc_product_offers_confirmation_pay": "Payer",
+  "wuc_product_offers_confirmation_activate": "Activer",
+
+  "wuc_product_offers_total_price_without_tax": "Prix HT :",
+  "wuc_product_offers_total_price_with_tax": "Prix TTC :",
+  "wuc_product_offers_duration": "Durée :"
+}
