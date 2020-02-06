@@ -9,6 +9,12 @@ export default /* @ngInject */ ($stateProvider) => {
       autoPayWithPreferredPaymentMethod: (ovhPaymentMethod) =>
         ovhPaymentMethod.hasDefaultPaymentMethod(),
 
+      catalog: /* @ngInject */ (user, WucOrderCartService) =>
+        WucOrderCartService.getProductPublicCatalog(
+          user.ovhSubsidiary,
+          'webHosting',
+        ),
+
       catalogAddon: /* @ngInject */ (
         goBackWithError,
         serviceOption,

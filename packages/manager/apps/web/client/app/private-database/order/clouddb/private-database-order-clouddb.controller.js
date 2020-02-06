@@ -2,7 +2,12 @@ import get from 'lodash/get';
 import orderBy from 'lodash/orderBy';
 import sortBy from 'lodash/sortBy';
 
-import { PRODUCT_NAME } from './private-database-order-clouddb.constants';
+import {
+  DATACENTER_CONFIGURATION_KEY,
+  ENGINE_CONFIGURATION_KEY,
+  PLAN_CODE_TEMPLATE,
+  PRODUCT_NAME,
+} from './private-database-order-clouddb.constants';
 
 export default class PrivateDatabaseOrderCloudDbCtrl {
   /* @ngInject */
@@ -16,6 +21,64 @@ export default class PrivateDatabaseOrderCloudDbCtrl {
     this.currentIndex = 0;
     this.defaultModelType = PRODUCT_NAME;
     this.model = {};
+
+    this.workflowOptions = {
+      catalog: this.catalog,
+      catalogItemTypeName: 'PLAN',
+      onBeforePricingGetPlancode: this.onConfigurationFinish.bind(this),
+      onGetConfiguration: this.onGetConfiguration.bind(this),
+      productName: PRODUCT_NAME,
+    };
+  }
+
+  onConfigurationFinish() {
+    const planCode = PLAN_CODE_TEMPLATE.replace(
+      /{{RAM}}/,
+      this.model.ramSize.value,
+    );
+
+    return planCode;
+  }
+
+  onGetConfiguration() {
+    return [
+      {
+        label: DATACENTER_CONFIGURATION_KEY,
+        value: this.model.datacenter.value,
+      },
+      {
+        label: ENGINE_CONFIGURATION_KEY,
+        value: this.model.engine.value,
+      },
+    ];
+  }
+
+  onCheckoutSuccess(checkoutResult) {
+    this.hasValidatedCheckout = true;
+    if (!checkoutResult.autoPayWithPreferredPaymentMethod) {
+      this.openBill(checkoutResult.url);
+      this.displaySuccessMessage(
+        `${this.$translate.instant(
+          'private_database_order_clouddb_bill_success',
+          { billUrl: checkoutResult.url },
+        )}`,
+      );
+    } else {
+      this.displaySuccessMessage(
+        `${this.$translate.instant(
+          'private_database_order_clouddb_payment_checkout_success',
+          {
+            accountId: this.defaultPaymentMean.label,
+            price: checkoutResult.prices.withTax.text,
+            billUrl: checkoutResult.url,
+          },
+        )}`,
+      );
+    }
+  }
+
+  getOrderState(state) {
+    this.orderState = state;
   }
 
   selectTypeOption() {

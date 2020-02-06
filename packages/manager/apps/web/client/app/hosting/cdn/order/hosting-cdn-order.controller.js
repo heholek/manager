@@ -3,9 +3,11 @@ import includes from 'lodash/includes';
 
 export default class {
   /* @ngInject */
-  constructor($filter, $timeout) {
+  constructor($filter, $timeout, $translate, $window) {
     this.$filter = $filter;
     this.$timeout = $timeout;
+    this.$translate = $translate;
+    this.$window = $window;
   }
 
   $onInit() {
@@ -21,6 +23,45 @@ export default class {
       // Go directly to the next step
       this.currentIndex = 1;
       this.isEditable = false;
+    }
+
+    this.workflowOptions = {
+      catalog: this.catalog,
+      catalogItemTypeName: 'ADDON',
+      productName: 'webHosting',
+      serviceNameToAddProduct: this.serviceName,
+      onBeforePricingGetPlancode: this.getPlancode.bind(this),
+      onGetConfiguration: this.getConfiguration.bind(this),
+    };
+  }
+
+  getConfiguration() {
+    return [
+      {
+        label: 'legacy_domain',
+        value: this.serviceName,
+      },
+    ];
+  }
+
+  getPlancode() {
+    return this.isOptionFree ? 'cdn_free_business' : 'cdn_business';
+  }
+
+  onCheckoutSuccess(checkoutResult) {
+    if (this.isOptionFree) {
+      this.goBack(
+        this.$translate.instant(
+          'hosting_dashboard_cdn_order_success_activation',
+        ),
+      );
+    } else {
+      this.$window.open(checkoutResult.url, '_blank');
+      this.goBack(
+        this.$translate.instant('hosting_dashboard_cdn_order_success', {
+          t0: checkoutResult.url,
+        }),
+      );
     }
   }
 

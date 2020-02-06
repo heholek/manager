@@ -38,6 +38,22 @@ export default /* @ngInject */ ($stateProvider) => {
           configurationSelected: true,
         });
       },
+      detachPlancode: /* @ngInject */ ($http, OvhApiServices, serviceName) =>
+        $http
+          .get(`/hosting/web/${serviceName}/emailOption`)
+          .then(({ data: emailOptionIds }) => {
+            const [emailOptionId] = emailOptionIds;
+            console.log(`EmailOption ID : ${emailOptionId}`);
+            return $http.get(`/email/domain/${serviceName}/serviceInfos`);
+          })
+          .then(({ data: serviceInfos }) => {
+            const { serviceId: serviceInfosId } = serviceInfos;
+            console.warn(`ServiceInfo ID : ${serviceInfosId}`);
+            return $http.get(`/services/${serviceInfosId}/detach`);
+          })
+          .then(({ data: detach }) => {
+            console.log(`Detachable : ${detach}`);
+          }),
     },
     translations: { value: ['.'], format: 'json' },
   });
