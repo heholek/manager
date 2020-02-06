@@ -116,7 +116,7 @@ export const ASSISTANCE_URLS = {
 
 export const HELP_CENTER_SUBSIDIARIES = ['FR'];
 
-export const CHATBOT_SUBSIDIARIES = ['FR'];
+export const CHATBOT_SUBSIDIARIES = ['FR', 'PL'];
 
 export const AVAILABLE_SUPPORT_LEVEL = ['business', 'enterprise'];
 
