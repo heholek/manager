@@ -15,8 +15,6 @@ import wucFileEditor from './fileEditor';
 import wucGuides from './guides';
 import wucIncrementNumber from './incrementNumber';
 import wucJavaEnum from './java-enum';
-// import wucOrder from './order';
-import wucProductOffers from './product-offers';
 import wucOrderCart from './order-cart';
 import wucOvhFileReader from './ovhFileReader';
 import wucProgressBarElementCounter from './progressBarElementCounter';
@@ -43,7 +41,6 @@ angular.module(moduleName, [
   wucGuides,
   wucIncrementNumber,
   wucJavaEnum,
-  wucProductOffers,
   wucOrderCart,
   wucOvhFileReader,
   wucProgressBarElementCounter,
