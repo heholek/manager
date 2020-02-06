@@ -12911,6 +12911,12 @@ ovh-api-services@^9.35.0:
   dependencies:
     lodash "^4.17.15"
 
+"ovh-api-services@git+https://github.com/ovh-ux/ovh-api-services.git#feat/connectivity-price-modem":
+  version "9.35.1"
+  resolved "git+https://github.com/ovh-ux/ovh-api-services.git#75e64db7355c6f223a7f19863d7d84e94b25df2e"
+  dependencies:
+    lodash "^4.17.15"
+
 ovh-common-style@^3.2.2, ovh-common-style@ovh-ux/ovh-common-style#^3.2.2:
   version "3.2.2"
   resolved "https://codeload.github.com/ovh-ux/ovh-common-style/tar.gz/cd9f7bea9240b7e2334ae5cd7e74529478b271d4"
