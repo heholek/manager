@@ -4,7 +4,11 @@
         <title>ManagerHub App</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
-    <body data-ng-app="managerHubApp" data-ng-strict-di>
+    <body
+        data-ng-app="managerHubApp"
+        data-ng-strict-di
+        data-ng-controller="HubController as $ctrl"
+    >
         <div
             id="managerPreload"
             class="d-flex text-center"
@@ -37,5 +41,11 @@
             <div data-ui-view class="container-fluid"></div>
             <ovh-manager-hub-user-panel></ovh-manager-hub-user-panel>
         </div>
+
+        <ovh-chatbot
+            data-ng-if="$ctrl.user.ovhSubsidiary"
+            data-language="{{$ctrl.currentLanguage}}"
+            data-country="{{$ctrl.user.ovhSubsidiary}}"
+        ></ovh-chatbot>
     </body>
 </html>
