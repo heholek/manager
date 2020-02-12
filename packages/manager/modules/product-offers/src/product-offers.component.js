@@ -72,6 +72,7 @@ export default {
 
     /**
      * Error handler.
+     * If it returns `false`, then the error will be escalated.
      * @type {Function}
      */
     onError: '&',

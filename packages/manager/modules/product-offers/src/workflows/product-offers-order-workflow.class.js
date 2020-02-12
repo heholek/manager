@@ -173,7 +173,7 @@ export default class OrderWorkflow extends Workflow {
             ),
       )
       .then(({ itemId }) =>
-        Promise.all(
+        this.$q.all(
           checkoutInformations.configuration.map(({ label, value }) =>
             this.WucOrderCartService.addConfigurationItem(
               this.cartId,
@@ -190,9 +190,9 @@ export default class OrderWorkflow extends Workflow {
         this.prices = prices;
       })
       .catch((error) =>
-        !this.onError || this.onError({ error })
-          ? Promise.reject(error)
-          : error,
+        !this.onError || this.onError({ error }) === false
+          ? this.$q.reject(error)
+          : undefined,
       )
       .finally(() => {
         this.updateLoadingStatus('getOfferValidationInformation');
@@ -229,9 +229,9 @@ export default class OrderWorkflow extends Workflow {
         });
       })
       .catch((error) =>
-        !this.onError || this.onError({ error })
-          ? Promise.reject(error)
-          : error,
+        !this.onError || this.onError({ error }) === false
+          ? this.$q.reject(error)
+          : undefined,
       )
       .finally(() => {
         this.updateLoadingStatus('validateOffer');

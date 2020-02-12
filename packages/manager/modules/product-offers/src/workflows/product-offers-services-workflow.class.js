@@ -62,9 +62,9 @@ export default class ServicesWorkflow extends Workflow {
         this.prices = prices;
       })
       .catch((error) =>
-        !this.onError || this.onError({ error })
+        !this.onError || this.onError({ error }) === false
           ? this.$q.reject(error)
-          : error,
+          : undefined,
       )
       .finally(() => {
         this.updateLoadingStatus('getOfferValidationInformation');
@@ -103,9 +103,9 @@ export default class ServicesWorkflow extends Workflow {
         });
       })
       .catch((error) =>
-        !this.onError || this.onError({ error })
+        !this.onError || this.onError({ error }) === false
           ? this.$q.reject(error)
-          : error,
+          : undefined,
       )
       .finally(() => {
         this.updateLoadingStatus('validateOffer');
