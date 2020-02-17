@@ -54,6 +54,10 @@ export default class HostingGeneralInformationsCtrl {
       quantity: 0,
     };
 
+    this.goToDetachEmail = this.$scope.goToDetachEmail;
+    this.isDetachEmailOptionAvailable =
+      this.$scope.emailOptionDetachInformation.length > 0;
+
     const quotaUsed = this.$scope.convertBytesSize(
       this.$scope.hosting.quotaUsed.value,
       this.$scope.hosting.quotaUsed.unit,
@@ -76,7 +80,6 @@ export default class HostingGeneralInformationsCtrl {
         this.getScreenshot(),
         this.retrievingSSLCertificate(),
         this.retrievingAvailableOffers(this.serviceName),
-        this.getEmailOfferDetails(this.serviceName),
       ])
       .then(() => this.HostingRuntimes.getDefault(this.serviceName))
       .then((runtime) => {
@@ -255,28 +258,9 @@ export default class HostingGeneralInformationsCtrl {
     return this.$state.go('app.hosting.database.private-sql-activation');
   }
 
-  getEmailOfferDetails(serviceName) {
-    this.isRetrievingEmailOffer = true;
-    return this.hostingEmailService
-      .getEmailOfferDetails(serviceName)
-      .then((offer) => {
-        this.emailOffer = offer;
-      })
-      .catch((error) => {
-        this.Alerter.alertFromSWS(
-          this.$translate.instant('hosting_dashboard_email_offer_get_error'),
-          error,
-          this.$scope.alerts.main,
-        );
-      })
-      .finally(() => {
-        this.isRetrievingEmailOffer = false;
-      });
-  }
-
   doesEmailOfferExists() {
     // empty array means user has no email offer
-    return !isEmpty(this.emailOffer);
+    return !isEmpty(this.$scope.emailOptionIds);
   }
 
   activateEmailOffer() {
