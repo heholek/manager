@@ -1,7 +1,7 @@
 import 'script-loader!jquery'; // eslint-disable-line
 import 'script-loader!lodash'; // eslint-disable-line
-import '@ovh-ux/manager-sms';
 
 import angular from 'angular';
+import ovhManagerSms from '@ovh-ux/manager-sms';
 
-angular.module('smsApp', ['ovhManagerSms']);
+angular.module('smsApp', [ovhManagerSms]);
