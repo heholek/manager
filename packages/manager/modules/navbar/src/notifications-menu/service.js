@@ -6,30 +6,39 @@ import { ACTIVE_STATUS, ACKNOWLEDGED_STATUS, REFRESH_TIME } from './constants';
 export default class Notifications {
   /* @ngInject */
   constructor(
+    $http,
     $interval,
     $q,
     $translate,
     atInternet,
-    OvhApiNotificationAapi,
     ovhManagerNavbarMenuHeaderBuilder,
   ) {
+    this.$http = $http;
     this.$interval = $interval;
     this.$q = $q;
     this.$translate = $translate;
     this.atInternet = atInternet;
-    this.OvhApiNotificationAapi = OvhApiNotificationAapi;
     this.NavbarBuilder = ovhManagerNavbarMenuHeaderBuilder;
   }
 
   getNotifications(lang, target) {
-    return this.OvhApiNotificationAapi.query({
-      lang,
-      target,
-    }).$promise;
+    return this.$http
+      .get('/notification', {
+        serviceType: 'aapi',
+        params: {
+          lang,
+          target,
+        },
+      })
+      .then(({ data }) => data);
   }
 
   updateNotifications(status) {
-    return this.OvhApiNotificationAapi.post(status).$promise;
+    return this.$http
+      .post('/notification', status, {
+        serviceType: 'aapi',
+      })
+      .then(({ data }) => data);
   }
 
   readNotifications(notification, status) {
@@ -93,13 +102,22 @@ export default class Notifications {
         (subLink) => !subLink.acknowledged && subLink.isActive,
       );
       if (toAcknowledge.length) {
-        this.OvhApiNotificationAapi.post({
-          acknowledged: toAcknowledge.map((x) => x.id),
-        }).$promise.then(() => {
-          toAcknowledge.forEach((sublink) => {
-            set(sublink, 'acknowledged', true);
+        this.$http
+          .post(
+            '/notification',
+            {
+              acknowledged: toAcknowledge.map((x) => x.id),
+            },
+            {
+              serviceType: 'aapi',
+            },
+          )
+          .then(({ data }) => data)
+          .then(() => {
+            toAcknowledge.forEach((sublink) => {
+              set(sublink, 'acknowledged', true);
+            });
           });
-        });
       }
       this.navbarContent.iconAnimated = false;
     }
