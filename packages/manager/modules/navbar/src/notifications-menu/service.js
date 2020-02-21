@@ -44,10 +44,9 @@ export default class Notifications {
   readNotifications(notification, status) {
     set(notification, 'updating', true);
 
-    return this.updateNotifications
-      .post({
-        [status]: notification.id,
-      })
+    return this.updateNotifications({
+      [status]: notification.id,
+    })
       .then(() => {
         set(notification, 'isActive', !notification.isActive);
         set(notification, 'acknowledged', true);
