@@ -10,6 +10,7 @@ import ovhManagerHubCarousel from './components/carousel';
 import ovhManagerHubOrderTracking from './components/order-tracking';
 import ovhManagerHubPaymentStatusTile from './components/payment-status-tile';
 import ovhManagerHubProducts from './components/products';
+import ovhManagerHubProductList from './components/product-list';
 import ovhManagerHubTile from './components/tile';
 import userPanel from './components/user-panel';
 
@@ -25,6 +26,7 @@ angular.module(moduleName, [
   ovhManagerHubPaymentStatusTile,
   ovhManagerHubTile,
   ovhManagerHubProducts,
+  ovhManagerHubProductList,
   userPanel,
 ]);
 
