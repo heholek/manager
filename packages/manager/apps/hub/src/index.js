@@ -8,6 +8,7 @@ import 'ovh-ui-angular';
 import ovhManagerCore from '@ovh-ux/manager-core';
 import ovhManagerHub from '@ovh-ux/manager-hub';
 import ovhManagerNavbar from '@ovh-ux/manager-navbar';
+import ovhManagerOrderTracking from '@ovh-ux/ng-ovh-order-tracking';
 
 import atInternet from './components/at-internet';
 import preload from './components/manager-preload';
@@ -30,6 +31,7 @@ angular
     ovhManagerCore,
     ovhManagerHub,
     ovhManagerNavbar,
+    ovhManagerOrderTracking,
     preload,
     uiRouter,
   ])
