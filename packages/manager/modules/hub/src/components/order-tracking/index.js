@@ -2,7 +2,7 @@ import angular from 'angular';
 import '@ovh-ux/ng-translate-async-loader';
 import ovhManagerCore from '@ovh-ux/manager-core';
 import 'angular-translate';
-import ovhManagerOrderTracking from '@ovh-ux/ng-ovh-order-tracking';
+import '@ovh-ux/ng-ovh-order-tracking';
 
 import component from './component';
 
@@ -15,7 +15,7 @@ angular
     'ngTranslateAsyncLoader',
     'oui',
     ovhManagerCore,
-    ovhManagerOrderTracking,
+    'ngOvhOrderTracking',
     'pascalprecht.translate',
   ])
   .component('hubOrderTracking', component)
