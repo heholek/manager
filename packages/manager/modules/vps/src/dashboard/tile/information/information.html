@@ -1,0 +1,85 @@
+<oui-tile
+    class=" h-100"
+    heading="{{ ::'vps_dashboard_tile_information_title' | translate }}"
+>
+    <oui-tile-definition
+        term="{{ ::'vps_dashboard_name' | translate }}"
+        description="{{:: $ctrl.vps.displayName || $ctrl.vps.name }}"
+    >
+        <oui-action-menu compact align="end">
+            <oui-action-menu-item
+                text="{{::$ctrl.actions.changeName.text}}"
+                aria-label="{{::$ctrl.actions.changeName.text}}"
+                on-click="$ctrl.actions.changeName.callback()"
+            >
+            </oui-action-menu-item>
+
+            <oui-action-menu-item
+                text="{{ ::$ctrl.actions.kvm.text }}"
+                on-click="$ctrl.goToKvm($ctrl.vps.noVNC)"
+                ng-if="$ctrl.actions.kvm.isAvailable()"
+            >
+            </oui-action-menu-item>
+
+            <oui-action-menu-item
+                on-click="$ctrl.actions.terminate.callback()"
+                ng-if="$ctrl.actions.terminate.isAvailable()"
+            >
+                <span data-translate="vps_configuration_terminate"></span>
+            </oui-action-menu-item>
+        </oui-action-menu>
+    </oui-tile-definition>
+    <oui-tile-definition
+        term="{{ ::'vps_dashboard_boot' | translate }}"
+        description="{{ ::$ctrl.vps.netbootMode }}"
+    >
+        <oui-action-menu
+            compact
+            align="end"
+            ng-if="$ctrl.action.rebootRescue.isAvailable() || $ctrl.actions.reboot.isAvailable()"
+        >
+            <oui-action-menu-item
+                text="{{ ::$ctrl.actions.reboot.text }}"
+                on-click="$ctrl.goToReboot()"
+                ng-if="$ctrl.actions.reboot.isAvailable()"
+            >
+            </oui-action-menu-item>
+            <oui-action-menu-item
+                text="{{ ::$ctrl.actions.rebootRescue.text }}"
+                on-click="$ctrl.goToRebootRescue()"
+                ng-if="$ctrl.actions.rebootRescue.isAvailable()"
+            >
+            </oui-action-menu-item>
+        </oui-action-menu>
+    </oui-tile-definition>
+    <oui-tile-definition
+        term="{{ ::'vps_dashboard_distribution' | translate }}"
+        description="{{ ::$ctrl.vps.distribution.name }}"
+    >
+    </oui-tile-definition>
+    <oui-tile-definition
+        term="{{ ::('vps_zone' | translate)+' ('+('vps_cluster' | translate)+')' }}"
+        description="{{ ::$ctrl.vps.zone+' ('+$ctrl.vps.cluster+')' }}"
+    >
+    </oui-tile-definition>
+    <oui-tile-definition
+        term="{{ ::'vps_dashboard_localisation' | translate }}"
+    >
+        <oui-tile-description>
+            <div
+                data-ng-repeat="(key, regions) in $ctrl.regionsGroup track by $index"
+            >
+                <span
+                    class="flag-icon {{ ::regions[0].icon }} flag flag__icon-sm mr-1"
+                    aria-hidden="true"
+                ></span>
+                <span
+                    data-ng-repeat="region in ::regions track by $index"
+                    data-ng-bind=":: region.macroRegion.code + (!$last ? ', ' : '')"
+                ></span>
+                <span data-ng-if="::key"> - </span>
+                <small data-ng-bind="::key"></small>
+            </div>
+        </oui-tile-description>
+    </oui-tile-definition>
+</oui-tile>

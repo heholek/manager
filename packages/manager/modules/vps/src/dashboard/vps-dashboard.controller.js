@@ -239,7 +239,7 @@ export default class {
       .then((changeOwnerHref) => {
         this.actions = {
           changeName: {
-            text: this.$translate.instant('vps_common_edit'),
+            text: this.$translate.instant('vps_dashboard_display_name_edit'),
             callback: () =>
               this.CucControllerHelper.modal.showNameChangeModal({
                 serviceName: this.serviceName,
@@ -371,17 +371,13 @@ export default class {
   }
 
   getRegionsGroup(regions) {
-    this.regionsGroup = [];
+    let detailedRegions = [];
     if (regions) {
-      this.detailedRegions = !isArray(regions)
+      detailedRegions = !isArray(regions)
         ? [this.CucRegionService.getRegion(regions)]
         : map(regions, (region) => this.CucRegionService.getRegion(region));
     }
-    this.regionsGroup = groupBy(this.detailedRegions, 'country');
-  }
-
-  hasMultipleRegions() {
-    return isArray(this.detailedRegions) && this.detailedRegions.length > 1;
+    this.regionsGroup = groupBy(detailedRegions, 'country');
   }
 
   static getActionStateParamString(params) {
