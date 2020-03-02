@@ -21,4 +21,10 @@
     </div>
 </div>
 <h2 data-translate="manager_hub_dashboard_services"></h2>
-<hub-products products="$ctrl.services"></hub-products>
+<oui-message data-type="error" data-ng-if="$ctrl.errors.services">
+    <span data-ng-bind="$ctrl.services.data"></span>
+</oui-message>
+<hub-products
+    data-ng-if="!$ctrl.errors.services"
+    products="$ctrl.services.data"
+></hub-products>

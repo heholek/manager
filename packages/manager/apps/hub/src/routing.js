@@ -2,6 +2,7 @@ import filter from 'lodash/filter';
 import head from 'lodash/head';
 import map from 'lodash/map';
 import { BillingService } from '@ovh-ux/manager-models';
+import mapValues from 'lodash/mapValues';
 
 export default /* @ngInject */ ($stateProvider, $urlRouterProvider) => {
   $stateProvider.state('app', {
@@ -9,6 +10,8 @@ export default /* @ngInject */ ($stateProvider, $urlRouterProvider) => {
     component: 'hubDashboard',
     resolve: {
       bills: /* @ngInject */ (hub) => hub.data.bills,
+      errors: /* @ngInject */ (hub) =>
+        mapValues(hub.data, ({ status }) => status === 'ERROR'),
       hub: /* @ngInject */ ($http) =>
         $http
           .get('/hub', {
@@ -60,7 +63,7 @@ export default /* @ngInject */ ($stateProvider, $urlRouterProvider) => {
           );
       },
 
-      services: /* @ngInject */ (hub) => hub.data.services.data.data,
+      services: /* @ngInject */ (hub) => hub.data.services.data,
       trackingPrefix: () => 'hub::dashboard::activity::payment-status',
     },
   });
