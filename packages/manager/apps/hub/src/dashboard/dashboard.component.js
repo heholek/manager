@@ -5,6 +5,7 @@ export default {
     bills: '<',
     me: '<',
     billingServices: '<',
+    goToProductPage: '<',
     notifications: '<',
     order: '<',
     services: '<',
