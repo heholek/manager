@@ -75,6 +75,7 @@ export default class Options {
           goToVpnConfiguration: this.goToVpnConfiguration,
 
           isDrpActionPossible: this.isDrpActionPossible,
+          isDrpAvailable: this.isDrpAvailable,
 
           service: this.dedicatedCloudDrp,
         };

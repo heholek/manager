@@ -14,6 +14,7 @@ export default {
     goToVpnConfiguration: '<',
 
     isDrpActionPossible: '<',
+    isDrpAvailable: '<',
   },
   controller,
   name: 'ovhManagerPccDashboardLegacy',

@@ -30,6 +30,7 @@ angular.module('App').controller(
       goToDrpDatacenterSelection,
       goToVpnConfiguration,
       isDrpActionPossible,
+      isDrpAvailable,
       OvhApiDedicatedCloud,
       User,
     ) {
@@ -50,6 +51,7 @@ angular.module('App').controller(
       this.goToDrpDatacenterSelection = goToDrpDatacenterSelection;
       this.goToVpnConfiguration = goToVpnConfiguration;
       this.isDrpActionPossible = isDrpActionPossible;
+      this.isDrpAvailable = isDrpAvailable;
       this.OvhApiDedicatedCloud = OvhApiDedicatedCloud;
       this.User = User;
       this.DRP_OPTIONS = DEDICATEDCLOUD_DATACENTER_DRP_OPTIONS;
