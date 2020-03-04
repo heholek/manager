@@ -31,6 +31,10 @@ export default class {
   }
 
   getAvailablePlans() {
+    this.privateRegistryService.trackEvents(
+      'public-cloud::pci::projects::project::private-registry::create',
+      'action',
+    );
     this.registry.region = this.registry.region.name;
     this.availablePlans = this.plans(this.registry.region);
   }

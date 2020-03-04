@@ -8,7 +8,13 @@ export default /* @ngInject */ ($stateProvider) => {
     resolve: {
       breadcrumb: /* @ngInject */ ($translate) =>
         $translate('private_registry_create'),
-
+      tracking(atInternet) {
+        atInternet.trackPage({
+          name:
+            'public-cloud::pci::projects::project::private-registry::create',
+          type: 'navigation',
+        });
+      },
       capabilities: /* @ngInject */ (pciPrivateRegistryService, projectId) =>
         pciPrivateRegistryService.getCapabilities(projectId),
       availableRegions: /* @ngInject */ (capabilities) =>
