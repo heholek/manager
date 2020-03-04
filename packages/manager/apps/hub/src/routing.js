@@ -62,6 +62,7 @@ export default /* @ngInject */ ($stateProvider, $urlRouterProvider) => {
 
       services: /* @ngInject */ (hub) => hub.data.services.data.data,
       trackingPrefix: () => 'hub::dashboard::activity::payment-status',
+      feedbackUrl: /* @ngInject */ (hub) => hub.data.survey,
     },
   });
 
