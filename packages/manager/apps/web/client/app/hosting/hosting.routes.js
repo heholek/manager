@@ -50,6 +50,8 @@ export default /* @ngInject */ ($stateProvider) => {
             ),
           )
           .then((servicesInformation) => servicesInformation.flatten()),
+      pendingTasks: /* @ngInject */ (HostingTask, serviceName) =>
+        HostingTask.getPending(serviceName).catch(() => []),
       serviceName: /* @ngInject */ ($transition$) =>
         $transition$.params().productId,
       goToDetachEmail: /* @ngInject */ ($state) => () =>

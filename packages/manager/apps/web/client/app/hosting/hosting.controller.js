@@ -39,6 +39,7 @@ export default class {
     HostingIndy,
     HostingOvhConfig,
     HostingTask,
+    pendingTasks,
     PrivateDatabase,
     HOSTING_STATUS,
   ) {
@@ -66,6 +67,7 @@ export default class {
     this.HostingIndy = HostingIndy;
     this.HostingOvhConfig = HostingOvhConfig;
     this.HostingTask = HostingTask;
+    this.pendingTasks = pendingTasks;
     this.PrivateDatabase = PrivateDatabase;
   }
 
@@ -82,6 +84,7 @@ export default class {
     this.$scope.emailOptionIds = this.emailOptionIds;
     this.$scope.emailOptionDetachInformation = this.emailOptionDetachInformation;
     this.$scope.goToDetachEmail = this.goToDetachEmail;
+    this.$scope.pendingTasks = this.pendingTasks;
 
     this.$scope.stepPath = '';
     this.$scope.currentAction = null;
@@ -516,43 +519,37 @@ export default class {
           },
         );
 
-        this.HostingTask.getPending(this.$stateParams.productId)
-          .then((tasks) => {
-            let queue;
-            if (tasks && tasks.length > 0) {
-              const taskPendingMessage = this.$translate.instant(
-                `hosting_global_php_version_pending_task_${tasks[0].function.replace(
-                  /ovhConfig\//,
-                  '',
-                )}`,
-              );
-              set(
-                this.$scope.ovhConfig,
-                'taskPending',
-                taskPendingMessage ||
-                  this.$translate.instant(
-                    'hosting_global_php_version_pending_task_common',
-                  ),
-              );
+        let queue;
+        if (this.pendingTasks && this.pendingTasks.length > 0) {
+          const taskPendingMessage = this.$translate.instant(
+            `hosting_global_php_version_pending_task_${this.pendingTasks[0].function.replace(
+              /ovhConfig\//,
+              '',
+            )}`,
+          );
+          set(
+            this.$scope.ovhConfig,
+            'taskPending',
+            taskPendingMessage ||
+              this.$translate.instant(
+                'hosting_global_php_version_pending_task_common',
+              ),
+          );
 
-              queue = map(tasks, (task) =>
-                this.HostingTask.poll(this.$stateParams.productId, task).catch(
-                  () => {
-                    set(this.$scope.ovhConfig, 'taskPendingError', false);
-                  },
-                ),
-              );
+          queue = map(this.pendingTasks, (task) =>
+            this.HostingTask.poll(this.$stateParams.productId, task).catch(
+              () => {
+                set(this.$scope.ovhConfig, 'taskPendingError', false);
+              },
+            ),
+          );
 
-              this.$q.all(queue).then(() => {
-                this.loadOvhConfig();
-              });
-            } else {
-              set(this.$scope.ovhConfig, 'taskPending', false);
-            }
-          })
-          .catch(() => {
-            set(this.$scope.ovhConfig, 'taskPending', false);
+          this.$q.all(queue).then(() => {
+            this.loadOvhConfig();
           });
+        } else {
+          set(this.$scope.ovhConfig, 'taskPending', false);
+        }
 
         this.HostingTask.getError(this.$stateParams.productId)
           .then((tasks) => {
